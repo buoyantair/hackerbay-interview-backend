@@ -137,5 +137,4 @@ async function createToken(username, password, secret, expiresIn) {
   }, secret, { expiresIn })
 }
 
-
 module.exports = app
