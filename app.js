@@ -58,7 +58,8 @@ router.post('/patch', authMiddleware, async ctx => {
   }
 })
 
-router.post('/thumbnail', authMiddleware, async ctx => {
+router.get('/thumbnail/:url', authMiddleware, async ctx => {
+  const remoteImageURL = ctx.params.url
   ctx.body = 'To be implemented'
 })
 
@@ -135,5 +136,6 @@ async function createToken(username, password, secret, expiresIn) {
     password
   }, secret, { expiresIn })
 }
+
 
 module.exports = app
