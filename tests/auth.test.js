@@ -100,9 +100,8 @@ describe('auth: protected routes', () => {
     })
   })
 
-  it('should return 401 for unauthorized access to protected route /thumbnail', async () => {
-    const response = await request.post('/thumbnail')
-      .send(patchReq)
+  it('should return 401 for unauthorized access to protected route /thumbnail/:email', async () => {
+    const response = await request.get('/thumbnail/someurltoimage')
       .set('Authorization', invalidAuthToken)
       .set('Accept', 'application/json')
 
