@@ -1,7 +1,7 @@
 const app = require('../app')
 const supertest = require('supertest')
 
-describe('route: thumbnail/:url', () => {
+describe('route: thumbnail', () => {
   const server = app.listen()
   const request = supertest.agent(server)
   let authToken
@@ -23,21 +23,9 @@ describe('route: thumbnail/:url', () => {
     server.close();
   });
 
-  it('should return 400 for sending a GET request with an arbitrary string as parameter', async () => {
+  it('should return 400 for sending a GET request with an invalid URL (not pointing to an image) as parameter', async () => {
     const response = await request
-      .get('/thumbnail/abadurlthatdoesntwork')
-      .set('Authorization', authToken)
-      .set('Accept', 'application/json')
-    expect(response.status).toEqual(400)
-    expect(response.type).toEqual("application/json")
-    expect(response.body).toEqual({
-      message: 'Please provide a valid URL as a parameter'
-    })
-  })
-
-  it('should return 400 for sending a GET request with an invalid URL as parameter', async () => {
-    const response = await request
-      .get('/thumbnail/https://www.google.com') // URL doesn't point to an actual image
+      .get('/thumbnail?image=https://www.google.com') // URL doesn't point to an actual image
       .set('Authorization', authToken)
       .set('Accept', 'application/json')
 

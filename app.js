@@ -4,8 +4,12 @@ const Router = require('koa-router')
 const koaBody = require('koa-body')
 const jwt = require('jsonwebtoken')
 const jsonpatch = require('jsonpatch')
+const isImageURL = require('is-image-url')
+const sharp = require('sharp')
 
-const { TOKEN_SECRET } = process.env
+const { downloadImage } = require('./utils')
+
+const { TOKEN_SECRET, PORT } = process.env
 
 const app = new Koa()
 const router = new Router()
@@ -58,9 +62,19 @@ router.post('/patch', authMiddleware, async ctx => {
   }
 })
 
-router.get('/thumbnail/:url', authMiddleware, async ctx => {
-  const remoteImageURL = ctx.params.url
-  ctx.body = 'To be implemented'
+router.get('/thumbnail', authMiddleware, async ctx => {
+  const remoteImageURL = new URL(`https://localhost:${PORT}`).searchParams.get('image')
+  const isValidImageURL = isImageURL(remoteImageURL)
+
+  if (!isValidImageURL) {
+    ctx.status = 400
+    ctx.type = "application/json"
+    ctx.body = {
+      message: 'Please provide a valid URL that is pointing to an image as a parameter'
+    }
+  }
+
+
 })
 
 app.use(logger)

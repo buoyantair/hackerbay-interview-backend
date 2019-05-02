@@ -101,7 +101,7 @@ describe('auth: protected routes', () => {
   })
 
   it('should return 401 for unauthorized access to protected route /thumbnail/:email', async () => {
-    const response = await request.get('/thumbnail/someurltoimage')
+    const response = await request.get('/thumbnail?image=https://google.com')
       .set('Authorization', invalidAuthToken)
       .set('Accept', 'application/json')
 
