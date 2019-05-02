@@ -31,6 +31,11 @@ async function downloadImage(url) {
   }
 }
 
+async function downloadAndResizeImage(url, cacheLocation, staticLocation) {
+  return
+}
+
 module.exports = {
-  downloadImage
+  downloadImage,
+  downloadAndResizeImage
 }
